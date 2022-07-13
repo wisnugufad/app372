@@ -5,6 +5,8 @@ import des_lib as lib
 
 import streamlit.components.v1 as components
 
+# if you dont know how to read the go to this site https://docs.streamlit.io/
+
 # CSS to inject contained in a string
 hide_table_row_index = """
             <style>
@@ -16,7 +18,6 @@ hide_table_row_index = """
 # Inject CSS with Markdown
 st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
-# bootstrap 4 collapse example
 st.write("""
 APP 372
 # DOUBLE EXPONENTIAL SMOOTHING

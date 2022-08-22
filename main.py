@@ -1,6 +1,6 @@
-from ast import If
 import streamlit as st
 import pandas as pd
+import altair as alt
 import des_lib as lib
 
 import streamlit.components.v1 as components
@@ -37,8 +37,21 @@ if option != '---- Select ----' :
     st.success(f"RSME : {df['rsme']}")
     st.markdown("<h2 style='text-align: center; color: black;'>Chart Forecast</h2>", unsafe_allow_html=True)
     
-    chart_line = pd.DataFrame(df['chart'])
-    st.line_chart(chart_line)
+    source = pd.DataFrame(df['chart'],
+                    columns=['flower', 'forecast'], index=pd.RangeIndex(44, name='x'))
+    source = source.reset_index().melt('x', var_name='category', value_name='y')
+
+    line_chart = alt.Chart(source).mark_line(interpolate='basis').encode(
+        alt.X('x', title='Week'),
+        alt.Y('y', title='Selling and Forecast'),
+        color='category:N'
+    ).properties(
+        title='Sales and Forecast of flower'
+    )
+
+    st.altair_chart(line_chart, use_container_width=True)
+
+    # st.dataframe(source)
 
     st.markdown("<h3 style='text-align: center; color: black;'>Table Forecast</h3>", unsafe_allow_html=True)
     st.table(df['table'])
